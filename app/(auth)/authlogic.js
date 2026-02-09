@@ -1,4 +1,5 @@
-import { authFeature ,googleProvider} from "../../lib/firebaseApp";
+// app/(auth)/authlogic.js
+import { authFeature, googleProvider } from "../../lib/firebaseApp";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -6,27 +7,24 @@ import {
   sendEmailVerification,
   signInWithPopup,
 } from "firebase/auth";
-export async function loginWiththeEmail(email, password) {
-  // the firebase logic
 
+export async function loginWiththeEmail(email, password) {
   try {
     const result = await signInWithEmailAndPassword(
       authFeature,
       email,
-      password,
+      password
     );
 
-    console.log(JSON.stringify(result));
     const user = result.user;
+
     if (!user.emailVerified) {
-      alert("Email is not verified");
+      alert("Please verify your email first");
       return;
-    } 
-    
+    }
+
     const token = await user.getIdToken();
-    console.log("Firebase ID Token:",token);
-    console.log("sending token to backend");
-    
+
     const response = await fetch("/api/auth", {
       method: "GET",
       headers: {
@@ -35,45 +33,43 @@ export async function loginWiththeEmail(email, password) {
     });
 
     const data = await response.json();
-    console.log("Backend response:",data);
+    console.log("Backend response:", data);
+
     return token;
-  } catch (exception) {
-    console.log(JSON.stringify(exception));
+  } catch (error) {
+    console.error(error);
     alert("Invalid credentials");
   }
 }
 
 export async function createAccount(email, password) {
-  // the firebase logic
   try {
     const result = await createUserWithEmailAndPassword(
       authFeature,
       email,
-      password,
+      password
     );
-    console.log(JSON.stringify(result));
     await sendEmailVerification(result.user);
-  } catch (exception) {
-    console.log(JSON.stringify(exception));
+    alert("Verification email sent");
+  } catch (error) {
+    console.error(error);
   }
 }
 
 export async function ResetEmail(email) {
-  // the firebase logic
   try {
-    const result = await sendPasswordResetEmail(authFeature, email);
-    console.log(JSON.stringify(result));
-  } catch (exception) {
-    console.log(JSON.stringify(exception));
+    await sendPasswordResetEmail(authFeature, email);
+    alert("Password reset email sent");
+  } catch (error) {
+    console.error(error);
   }
 }
 
 export async function googlelogin() {
-    try {
-      const result = await signInWithPopup(authFeature, googleProvider);
-      console.log("User:", result.user);
-    } catch (error) {
-      console.error(error);
-    }
-  
+  try {
+    const result = await signInWithPopup(authFeature, googleProvider);
+    console.log("Google user:", result.user);
+  } catch (error) {
+    console.error(error);
+  }
 }

@@ -1,29 +1,12 @@
-
-// export const runtime = "nodejs";
-// import { NextResponse } from "next/server";
-// import { verifyUser } from "@/utils/verifyUser";
-
-// export async function GET(request) {
-//   try {
-//     const user = await verifyUser(request);
-
-//     return NextResponse.json({ user });
-//   } catch {
-//     return NextResponse.json(
-//       { message: "Unauthorized" },
-//       { status: 401 }
-//     );
-//   }
-// }
-
-// ✅ FIXED - Add POST method:
+// app/api/auth/route.js
 export const runtime = "nodejs";
+
 import { NextResponse } from "next/server";
-import { resumeParser } from "@/utils/resumeParser";
+import { verifyUser } from "@/utils/verifyUser";
 
 export async function GET(request) {
   try {
-    const user = await resumeParser(request);
+    const user = await verifyUser(request);
     return NextResponse.json({ user });
   } catch (error) {
     console.error("GET /api/auth error:", error.message);
@@ -34,10 +17,9 @@ export async function GET(request) {
   }
 }
 
-// ✅ ADD THIS:
 export async function POST(request) {
   try {
-    const user = await resumeParser(request);
+    const user = await verifyUser(request);
     return NextResponse.json({ user });
   } catch (error) {
     console.error("POST /api/auth error:", error.message);
