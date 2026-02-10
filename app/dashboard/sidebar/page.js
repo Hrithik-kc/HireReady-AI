@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Bell,
   Home,
   FileText,
   Briefcase,
@@ -9,24 +8,139 @@ import {
   MessageSquare,
   Wrench,
 } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 
-export function SidebarItem({ icon, label, href, pathname }) {
-  const active = pathname === href;
+import { usePathname } from "next/navigation";
+import { SidebarItem } from "@/components/sidebar-item";
+import { ResourceCard, ToolCard } from "@/components/resource-card";
+import { ProgressItem } from "@/components/card";
+
+export default function Dashboard() {
+  const pathname = usePathname();
 
   return (
-    <Link href={href}>
-      <button
-        className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg transition ${
-          active
-            ? "bg-blue-50 text-blue-600 font-medium"
-            : "hover:bg-gray-100 text-gray-700"
-        }`}
-      >
-        {icon}
-        {label}
-      </button>
-    </Link>
+    <div className="min-h-screen bg-[#f3f6fb] flex flex-col">
+      {/* ================= TOP NAVBAR ================= */}
+      <header className="h-14 bg-[#163a6b] text-white flex items-center justify-between px-6 shadow-sm">
+        <div className="flex items-center gap-2 font-semibold text-lg">
+          <div className="w-7 h-7 rounded-full bg-blue-400 flex items-center justify-center">
+            H
+          </div>
+          HireReady AI
+        </div>
+
+        <button className="bg-blue-500 hover:bg-blue-600 px-4 py-1.5 rounded-md text-sm font-medium transition">
+          Upgrade to Premium
+        </button>
+      </header>
+
+      <div className="flex flex-1">
+        {/* ================= SIDEBAR ================= */}
+        <aside className="w-64 bg-white border-r hidden md:block">
+          <nav className="p-4 space-y-2 text-sm">
+            <SidebarItem href="/dashboard" icon={<Home size={18} />} label="Home" pathname={pathname} />
+            <SidebarItem href="/resume" icon={<FileText size={18} />} label="Resume Builder" pathname={pathname} />
+            <SidebarItem href="/jobs" icon={<Briefcase size={18} />} label="Job Tracker" pathname={pathname} />
+            <SidebarItem href="/interview" icon={<MessageSquare size={18} />} label="Mock Interviews" pathname={pathname} />
+            <SidebarItem href="/networking" icon={<Users size={18} />} label="Networking" pathname={pathname} />
+            <SidebarItem href="/ai-tools" icon={<Wrench size={18} />} label="AI Toolbox" pathname={pathname} />
+          </nav>
+
+          <div className="mt-6 border-t p-4 space-y-3 text-sm text-gray-600">
+            <button className="hover:text-blue-600">Chrome Extension</button>
+            <button className="hover:text-blue-600">Suggest a Feature</button>
+            <button className="hover:text-blue-600">Report a Bug</button>
+          </div>
+        </aside>
+
+        {/* ================= MAIN ================= */}
+        <main className="flex-1 p-8 space-y-8">
+          {/* ===== PROGRESS ===== */}
+          <div className="grid lg:grid-cols-2 gap-6">
+            <div className="bg-white rounded-xl shadow-sm">
+              <div className="p-4 border-b border-gray-300 flex justify-between font-medium">
+                Your Progress
+                <span className="text-gray-400">0/3</span>
+              </div>
+
+              <div className="p-3">
+                <ProgressItem title="Resume Review" />
+                <ProgressItem title="Practice Mock Interview" />
+                <ProgressItem title="Apply to Jobs" />
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <p className="text-xs text-blue-600 font-medium">
+                Immediate Next Step
+              </p>
+              <h3 className="text-xl font-semibold mt-2">
+                Got Your First Interview Scheduled
+              </h3>
+              <p className="text-lg text-gray-500 mt-1">
+                Ace your interview using AI mock interviews.
+              </p>
+
+              <button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
+                Practice Interview
+              </button>
+            </div>
+          </div>
+
+          {/* ===== TOOLS ===== */}
+          <div className="grid lg:grid-cols-3 gap-6">
+            <div className="bg-white rounded-xl p-6 shadow-sm">
+              <p className="text-xl text-gray-500">Plans starting from</p>
+              <h3 className="text-3xl font-bold mt-2">$9.99 / Week</h3>
+
+              <button className="mt-6 w-full bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-md text-sm font-medium">
+                UPGRADE NOW
+              </button>
+            </div>
+
+            <ToolCard
+              title="ATS Resume Analyzer"
+              sub="Optimize your resume for ATS and recruiters."
+              button="Check ATS Score"
+              img="https://resumeup.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FResumeUp_Hero_Image_1.ec6a0ba8.png&w=640&q=75"
+            />
+
+            <ToolCard
+              title="AI Interview Coach"
+              sub="Practice interviews with instant AI feedback."
+              button="Start Practicing"
+              img="https://resumeup.ai/_next/image?url=%2Fimages%2Fnew_templates%2Fcatalyst_resume.jpg&w=640&q=75"
+            />
+          </div>
+
+          {/* ===== RESOURCES ===== */}
+          <section className="space-y-4">
+            <div className="flex justify-between">
+              <h2 className="text-lg font-semibold">Resources</h2>
+              <button className="text-sm text-blue-600">View all</button>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              <ResourceCard
+                img="https://cdn.prod.website-files.com/635c591478332fd4db25d46e/65d25df1b0d7cb8d764bd5c3_chatgpt%20for%20behavioral%20interview.avif"
+                info="Using ChatGPT for Behavioral Interviews"
+                subinfo="Learn how to structure perfect interview answers."
+              />
+
+              <ResourceCard
+                img="https://resumeup.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fresume-length-best-practices.5508cfd7.jpeg&w=640&q=75"
+                info="Ideal Resume Length in 2026"
+                subinfo="Best practices based on experience level."
+              />
+
+              <ResourceCard
+                img="https://resumeup.ai/_next/image?url=%2Fresume-up-hero.png&w=1200&q=75"
+                info="Top Tech Job Boards"
+                subinfo="Where tech professionals should apply."
+              />
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
   );
 }

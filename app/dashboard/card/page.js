@@ -15,25 +15,3 @@ export function StatCard({ title }) {
     </button>
   );
 }
-
-/* ================= PAGE ================= */
-
-export default function CardPage() {
-  return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900">
-        Dashboard Cards
-      </h1>
-
-      <div className="space-y-3">
-        <ProgressItem title="Resume Completion" />
-        <ProgressItem title="Interview Preparation" />
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <StatCard title="ATS Score" />
-        <StatCard title="Applications Sent" />
-      </div>
-    </div>
-  );
-}
