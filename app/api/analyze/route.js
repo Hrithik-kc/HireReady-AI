@@ -1,4 +1,5 @@
 import { callGemini } from "../../../lib/gemini";
+import {resumeParser} from "@/utils/verifyUser";
 
 function scanResumeText(rawText) {
   if (!rawText) return "";
