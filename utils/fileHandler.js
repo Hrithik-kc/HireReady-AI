@@ -1,8 +1,6 @@
+// utils/fileHandler.js
 export const fileHandler = async (file) => {
-  if (!file) {
-    console.error("No file provided");
-    return;
-  }
+  if (!file) return "";
 
   try {
     const formData = new FormData();
@@ -19,9 +17,9 @@ export const fileHandler = async (file) => {
       throw new Error(data.error || "Resume parsing failed");
     }
 
-    return data.text;
-  } catch (err) {
-    console.error("Parsing Error:", err.message);
-    throw err;
+    return data.text || "";
+  } catch (error) {
+    console.error("File handler error:", error);
+    throw error;
   }
 };
