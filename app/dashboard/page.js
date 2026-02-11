@@ -11,14 +11,14 @@ import {
 
 import { usePathname } from "next/navigation";
 
-
+import {useRouter} from "next/navigation";
 import { SidebarItem } from "./sidebar/page";
 import { ResourceCard, ToolCard } from "./ResourceCard/page";
 import { ProgressItem, StatCard } from "./card/page";
 
 export default function Dashboard() {
   const pathname = usePathname();
-
+  const route = useRouter();
   return (
     <div className="min-h-screen bg-[#f3f6fb] flex flex-col">
       {/* ================= TOP NAVBAR ================= */}
@@ -50,7 +50,7 @@ export default function Dashboard() {
               pathname={pathname}
             />
             <SidebarItem
-              href="/resume"
+              href="/resumeBuilder"
               icon={<FileText size={18} />}
               label="Resume Builder"
               pathname={pathname}
@@ -122,7 +122,11 @@ export default function Dashboard() {
                   Ace your upcoming interview using AI mock interview tools.
                 </p>
 
-                <button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
+                <button 
+                onClick = {()=>{
+                  route.push("../interview");
+                }}
+                className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
                   Practice Interview
                 </button>
               </div>
