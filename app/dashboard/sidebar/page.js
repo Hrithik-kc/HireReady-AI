@@ -1,25 +1,15 @@
 "use client";
 
-import {
-  Home,
-  FileText,
-  Briefcase,
-  Users,
-  MessageSquare,
-  Wrench,
-} from "lucide-react";
-
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SidebarItem } from "/sidebar-item/.";
-import { ResourceCard, ToolCard } from "@/resource-card";
-import { ProgressItem } from "@/card";
 
-export default function Dashboard() {
+export const SidebarItem = ({ href, icon, label }) => {
   const pathname = usePathname();
+  const active = pathname === href;
 
   return (
-   
-      <button
+    <Link href={href}>
+      <div
         className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg transition ${
           active
             ? "bg-blue-50 text-blue-600 font-medium"
@@ -28,7 +18,7 @@ export default function Dashboard() {
       >
         {icon}
         {label}
-      </button>
-    
+      </div>
+    </Link>
   );
-}
+};
