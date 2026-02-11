@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Bell,
   Home,
   FileText,
   Briefcase,
@@ -9,11 +8,11 @@ import {
   MessageSquare,
   Wrench,
 } from "lucide-react";
-import Link from "next/link";
+
 import { usePathname } from "next/navigation";
 
-export function SidebarItem({ icon, label, href, pathname }) {
-  const active = pathname === href;
+export default function Dashboard() {
+  const pathname = usePathname();
 
   return (
    
